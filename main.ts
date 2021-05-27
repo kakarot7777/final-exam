@@ -1,7 +1,12 @@
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    info.changeLifeBy(-1)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     otherSprite.destroy()
     info.changeScoreBy(1)
 })
+let projectile: Sprite = null
 let shark = sprites.create(assets.image`shark`, SpriteKind.Player)
 let snail = sprites.create(assets.image`snail`, SpriteKind.Food)
 shark.setPosition(12, 47)
@@ -21,3 +26,10 @@ bone.setPosition(136, 61)
 duck.setPosition(146, 16)
 bone.setVelocity(15, 15)
 bone.setBounceOnWall(true)
+let direction = 1
+info.setLife(3)
+game.onUpdateInterval(200, function () {
+    projectile = sprites.createProjectileFromSide(assets.image`ball`, direction * 50, 0)
+    projectile.y = randint(5, 115)
+    direction = direction * -1
+})
